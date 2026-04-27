@@ -15,20 +15,12 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         //
     })
-   ->withExceptions(function (Exceptions $exceptions): void {
+  ->withExceptions(function (Exceptions $exceptions): void {
 
-    $exceptions->render(function (Throwable $e, $request) {
-
-        if ($request->is('api/*')) {
-
-            if ($e instanceof Illuminate\Auth\AuthenticationException) {
-                return response()->json([
-                    'message' => 'Não autenticado'
-                ], 401);
-            }
-
-        }
-
+    $exceptions->render(function (Illuminate\Auth\AuthenticationException $e, $request) {
+        return response()->json([
+            'message' => 'Não autenticado'
+        ], 401);
     });
 
 });
