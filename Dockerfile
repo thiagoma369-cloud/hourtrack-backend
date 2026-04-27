@@ -23,7 +23,11 @@ WORKDIR /var/www/html
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Instala dependências do Laravel
-RUN composer install
+RUN composer install --no-dev --no-interaction --prefer-dist
+
+
+RUN cp .env.example .env
+RUN php artisan key:generate
 
 # Ajusta permissões
 RUN chown -R www-data:www-data /var/www/html/storage
