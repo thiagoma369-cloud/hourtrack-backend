@@ -14,13 +14,17 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         //
     })
-    ->withExceptions(function ($exceptions) {
+   ->withExceptions(function ($exceptions) {
 
-        $exceptions->render(function (AuthenticationException $e, $request) {
+    $exceptions->render(function (\Illuminate\Auth\AuthenticationException $e, $request) {
+        
+        if ($request->is('api/*')) {
             return response()->json([
                 'message' => 'Não autenticado'
             ], 401);
-        });
+        }
 
-    })
-    ->create(); 
+    });
+
+})
+->create(); 
