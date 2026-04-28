@@ -32,6 +32,13 @@ RUN composer install --no-dev --no-interaction --prefer-dist
 RUN cp .env.example .env
 RUN php artisan key:generate
 
+# cria banco sqlite
+RUN mkdir -p database
+RUN touch database/database.sqlite
+
+# roda migrations
+RUN php artisan migrate --force
+
 # Ajusta permissões
 RUN chown -R www-data:www-data /var/www/html/storage
 RUN chmod -R 775 /var/www/html/storage
