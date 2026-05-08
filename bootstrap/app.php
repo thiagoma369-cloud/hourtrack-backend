@@ -11,18 +11,18 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
-    ->withMiddleware(function (Middleware $middleware): void {
-        //
-    })
+  ->withMiddleware(function (Middleware $middleware): void {
+    $middleware->redirectGuestsTo(function () {
+        return null;
+    });
+})
    ->withExceptions(function ($exceptions) {
 
-    $exceptions->render(function (\Illuminate\Auth\AuthenticationException $e, $request) {
-        
-        if ($request->is('api/*')) {
-            return response()->json([
-                'message' => 'Não autenticado'
-            ], 401);
-        }
+   $exceptions->render(function (\Illuminate\Auth\AuthenticationException $e, $request) {
+
+    return response()->json([
+        'message' => 'Não autenticado'
+    ], 401);
 
     });
 
