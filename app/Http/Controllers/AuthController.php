@@ -10,8 +10,14 @@ class AuthController extends Controller
 {
    public function register(Request $request)
 {
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:users',
+        'password' => 'required|min:6'
+    ]);
+
     return response()->json([
-        'teste' => 'entrou no register'
+        'teste' => 'validação passou'
     ]);
 }
 
