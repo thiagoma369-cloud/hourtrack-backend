@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-   public function register(Request $request)
+    public function register(Request $request)
 {
     $request->validate([
         'name' => 'required|string|max:255',
@@ -16,8 +16,11 @@ class AuthController extends Controller
         'password' => 'required|min:6'
     ]);
 
+    $senhaHash = Hash::make($request->password);
+
     return response()->json([
-        'teste' => 'validação passou'
+        'teste' => 'hash criada',
+        'senha' => $senhaHash
     ]);
 }
 
