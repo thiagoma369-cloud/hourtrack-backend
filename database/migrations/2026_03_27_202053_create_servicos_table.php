@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('tipo');
 
             $table->decimal('valor_hora', 10, 2);#10: total de digitos, 2: casas decimais
-            $table->integer('horas');
+            $table->decimal('horas', 8, 2);
 
             $table->timestamps();
 
